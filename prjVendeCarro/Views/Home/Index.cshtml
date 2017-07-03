@@ -1,0 +1,60 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+    var foto0 = "/Images/Fotos/" + ViewBag.Foto0;
+    var foto1 = "/Images/Fotos/" + ViewBag.Foto1;
+    var foto2 = "/Images/Fotos/" + ViewBag.Foto2;
+    var foto3 = "/Images/Fotos/" + ViewBag.Foto3;
+}
+
+<a id="news" href="#">
+    <img id="imgNews" src="~/Images/news1.png" />
+
+</a>
+<div class="body">
+    <div class="row">
+
+        <div class="col-md-4" style="margin-left: 20px; margin-bottom: 20px;">
+            <h2>Mais buscados</h2>
+            <div id="maisbuscados">
+                <div class="bg-card marg-t-20">
+
+                    <a href="~/Carro/Details/@ViewBag.car0">
+                        <div class="w-50pc padd-r-10 pull-left">
+                            <div class="thumbVeiculos" style="box-shadow: rgba(50, 50, 50, 0) 0px 0px 5px 0px;"><img class="w-100pc" 
+src="@foto0" width="155px" height="103px" style="transform: matrix(1, 0, 0, 1, 0, 0);"></div>
+                        </div>
+                    </a>
+
+                    <a href="~/Carro/Details/@ViewBag.car1">
+                        <div class="w-50pc padd-r-10 pull-left">
+                            <div class="thumbVeiculos" style="box-shadow: rgba(50, 50, 50, 0) 0px 0px 5px 0px;"><img class="w-100pc" 
+src="@foto1" width="155px" height="103px" style="transform: matrix(1, 0, 0, 1, 0, 0);"></div>
+                        </div>
+                    </a>
+
+                    <div class="clearfix"></div><div class="marg-t-20"></div><a href="~/Carro/Details/@ViewBag.car2">
+                        <div class="w-50pc padd-r-10 pull-left">
+                            <div class="thumbVeiculos" style="box-shadow: rgba(50, 50, 50, 0) 0px 0px 5px 0px;"><img class="w-100pc" 
+src="@foto2" width="155px" height="103px" style="transform: matrix(1, 0, 0, 1, 0, 0);"></div>
+                        </div>
+                    </a>
+
+                    <a href="~/Carro/Details/@ViewBag.car3">
+                        <div class="w-50pc padd-r-10 pull-left">
+                            <div class="thumbVeiculos" style="box-shadow: rgba(50, 50, 50, 0) 0px 0px 5px 0px;"><img class="w-100pc" 
+src="@foto3" width="155px" height="103px" style="transform: matrix(1, 0, 0, 1, 0, 0);"></div>
+                        </div>
+                    </a>
+                    </center>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div id="acoes" style="padding-right:20px;">
+                <a class="btn btn-primary btn-lg btn-block" href="~/Carro">Encontrar</a>
+                <a class="btn btn-primary btn-lg btn-block" href="~/Carro/Create">Anuncie Aqui</a>
+            </div>
+        </div>
+    </div>
+</div>

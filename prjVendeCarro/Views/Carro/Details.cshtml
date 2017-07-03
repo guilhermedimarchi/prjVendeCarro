@@ -1,0 +1,204 @@
+﻿@model prjVendeCarro.Models.CarroModels
+
+@{
+    ViewBag.Title = "Details";
+
+    string foto = "Images/Fotos/";
+    int id = Model.Id;
+
+
+}
+
+<div class="body nav" style="padding:0px; height:500px;">
+
+    <div id="" class="titulo-carro">
+        @Html.DisplayFor(model => model.Nome) - @Html.DisplayFor(model => model.Modelo.Nome) - @Html.DisplayFor(model => model.Ano) - @Html.DisplayFor(model => model.Combustivel.Nome) - @Model.Cidade / @Model.Cidade.Estado
+        <div style="float:right;">@Html.ActionLink("Voltar", "Index")</div>
+    </div>
+
+    <div class="content" style="padding:20px;">
+
+
+        <div id="imagens" class="imagens">
+
+            <div class="carousel slide" data-ride="carousel" id="carousel-ex">
+                <div class="carousel-inner">
+                    @{
+                        string divitem = "";
+                        foreach (var item in (List<string>)ViewBag.Fotos)
+                        {
+                            if (item == ((List<string>)ViewBag.Fotos).First())
+                            {
+                                divitem = "active";
+                            }
+                            else
+                            {
+                                divitem = "";
+                            }
+
+                            <div class="item foto @divitem" style="width:400px;height:400px">
+                                <img src="/Images/Fotos/@item" alt=" image" style="width:400px;height:400px">
+                            </div>
+                        }
+                    }
+
+                </div>
+                <a href="#carousel-ex" class="left carousel-control" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                </a>
+                <a href="#carousel-ex" class="right carousel-control" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right"></span>
+                </a>
+            </div>
+        </div>
+
+
+
+
+
+        <div id="detalhes" class="detalhes">
+            <h4>Detalhes do Veiculo:</h4>
+            <p>@Html.DisplayFor(model => model.Ano) / @Html.DisplayFor(model => model.Ano)</p>
+            <strong><p>R$ @Html.DisplayFor(model => model.Preco)</p></strong>
+            <p>@Html.DisplayFor(model => model.QtdePorta) Portas</p>
+            <p>@Html.DisplayFor(model => model.Km) quilometros rodados</p>
+            
+        </div>
+        <div id="detalhes" class="detalhes">
+            <h4 style="float:left;">Proprietário:</h4><span style="float:right;margin-top:10px;text-decoration:underline;">@Model.Usuario</span>
+            <br /><br />
+            <p></p><p></p>
+            <p><strong>Telefone:</strong> @Model.Usuario.Telefone</p>
+            <p><strong>Email:</strong> @Model.Usuario.Email</p>
+            <p><strong>Cidade/Estado:</strong> @Model.Cidade / @Model.Cidade.Estado</p>
+            
+        </div>
+        <div class="detalhes2">
+            <hr />
+            <h4>Acessorios:</h4>
+            <p>@Model.Detalhe</p>
+        </div>
+        @if ((bool)ViewBag.vendedor) {
+            <a href="/Carro/Edit/@Model.Id" class="btn btn-primary" style="float: right;">
+                <i class="glyphicon glyphicon-edit"> </i> Editar
+            </a>
+            <button  class="btn btn-danger" style="float: right;" data-toggle="modal" data-target="#Excluir">
+                <i class="glyphicon glyphicon-trash"> </i> Excluir
+            </button>
+        }
+    </div>
+</div>
+@Html.Partial("Delete")
+
+
+@*
+    <h2>Details</h2>
+
+    <div>
+        <h4>CarroModels</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Combustivel.Nome)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Combustivel.Nome)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Marca.Nome)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Marca.Nome)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Modelo.Nome)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Modelo.Nome)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Nome)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Nome)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Ano)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Ano)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Cor)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Cor)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Foto)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Foto)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Preco)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Preco)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Km)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Km)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.QtdePorta)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.QtdePorta)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Cambio)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Cambio)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Versao)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Versao)
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+
+*@

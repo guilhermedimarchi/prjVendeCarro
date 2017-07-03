@@ -1,0 +1,318 @@
+﻿@model prjVendeCarro.Models.CarroModels
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Editar seu carro</h2>
+
+
+@using (Html.BeginForm("Edit", "Carro", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>CarroModels</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.idUsuario)
+        <div class="form-horizontal body" style="height:700px;">
+
+
+            <div>
+                <h2 class="col-md-9" style="margin-left:-15px;">@Html.DisplayFor(model => model.Nome)</h2>
+                <input style="margin-top:0px;margin-left:200px;" type="submit" value="Publicar anúncio" class="btn btn-primary btn-lg btn-block" />
+                <hr />
+            </div>
+            <br />
+            <div style="float:left; width:300px;" class="col-md-3">
+                <div class="form-group">
+                    <label class="control-label col-md-2">
+                        @Html.DisplayNameFor(model => model.Nome)
+                    </label>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Nome, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Nome, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2">
+                        @Html.DisplayNameFor(model => model.idMarca)
+                    </label>
+                    <div class="col-md-10">
+                        @Html.DropDownListFor(model => model.idMarca, (SelectList)ViewBag.Marcas, htmlAttributes: new { @class = "form-control", @onchange = "GetModelos()" })
+                        @Html.ValidationMessageFor(model => model.idMarca, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2">
+                        @Html.DisplayNameFor(model => model.idModelo)
+                    </label>
+                    <div class="col-md-10">
+                        @Html.DropDownListFor(model => model.idModelo, (SelectList)ViewBag.Modelos, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.idModelo, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2">
+                        Comb.
+                    </label>
+                    <div class="col-md-10">
+                        @Html.DropDownListFor(model => model.idCombustivel, (SelectList)ViewBag.Combustiveis, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.idCombustivel, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2">
+                        @Html.DisplayNameFor(model => model.idEstado)
+                    </label>
+                    <div class="col-md-10">
+                        @Html.DropDownListFor(model => model.idEstado, (SelectList)ViewBag.Estados, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.idEstado, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2">
+                        @Html.DisplayNameFor(model => model.idCidade)
+                    </label>
+                    <div class="col-md-10">
+                        @Html.DropDownListFor(model => model.idCidade, (SelectList)ViewBag.Cidades, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.idCidade, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2">
+                        @Html.DisplayNameFor(model => model.Ano)
+                    </label>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Ano, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Ano, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2">
+                        @Html.DisplayNameFor(model => model.Cor)
+                    </label>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Cor, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Cor, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="control-label col-md-2">
+                        @Html.DisplayNameFor(model => model.Km)
+                    </label>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Km, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Km, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div style="float:left;" class="col-md-5">
+                <div class="form-group">
+                    <label class="control-label col-md-2">
+                        @Html.DisplayNameFor(model => model.QtdePorta)
+                    </label>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.QtdePorta, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.QtdePorta, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2">
+                        @Html.DisplayNameFor(model => model.Cambio)
+                    </label>
+                    <div class="col-md-10">
+                        @Html.EnumDropDownListFor(model => model.Cambio, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Cambio, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2">
+                        @Html.DisplayNameFor(model => model.Versao)
+                    </label>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Versao, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Versao, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="control-label col-md-2">
+                        Detalhes
+                    </label>
+                    <div class="col-md-10">
+                        @Html.TextAreaFor(model => model.Detalhe, 11, 90, new { htmlAttributes = new { @class = "form-control textarea" } })
+                        @Html.ValidationMessageFor(model => model.Detalhe, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+                <div class="form-group" style="color:red;font-weight:bolder;">
+                    <label class="control-label col-md-2">
+                        Preço(R$)
+                    </label>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Preco, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Preco, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+            </div>
+
+            <div style="float:left; margin-left:-40px;margin-top:-20px; ">
+                <div class="form-group">
+                    <label class="control-label col-md-2">
+                        Fotos
+                    </label>
+                    <div class="col-md-10">
+                        @Html.HiddenFor(model => model.Foto)
+                        <div id="fotos">
+                            <div class="hide">
+
+                            </div>
+                            @foreach (var foto in (Dictionary<string, string>)ViewBag.Fotos)
+                            {
+                                <img id="img-@foto.Key" style="cursor: pointer;" src="~/Images/Fotos/@foto.Value" width="200" />
+                            }
+                        </div>
+                        <div id="fileFoto">
+                            <div id="inputFoto">
+                                <input id="0" data-num="0" class="btn-default" type="file" value="Upload" accept="image/*" name="files" onchange="upload(this);" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Voltar", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Styles.Render("~/Content/css")
+
+    <script>
+        $(document).ready(function () {
+            $("#idMarca").change(function () {
+                var idMarca = $(this).val();
+                $.ajax({
+                    url: '/Carro/GetModelos',
+                    type: "POST",
+                    dataType: "JSON",
+                    data: { idMarca: idMarca },
+                    success: function (modelos) {
+                        $("#idModelo").html(""); // clear before appending new list
+                        var str = "";
+                        $.each(modelos, function (i, modelo) {
+                            $("#idModelo").append(
+                                $("<option></option>").val(modelo.Value).html(modelo.Text)
+                                );
+                        });
+                    }
+                });
+            });
+            $("#idEstado").change(function () {
+                var idEstado = $(this).val();
+                $.ajax({
+                    url: '/Carro/GetCidades',
+                    type: "POST",
+                    dataType: "JSON",
+                    data: { idEstado: idEstado },
+                    success: function (cidades) {
+                        $("#idCidade").html(""); // clear before appending new list
+                        var str = "";
+                        $.each(cidades, function (i, cidade) {
+                            $("#idCidade").append(
+                                $("<option></option>").val(cidade.Value).html(cidade.Text)
+                                );
+                        });
+                    }
+                });
+            });
+            $("#fotos img").click(function () {
+                if ($(this).hasClass("img-disabled")) {
+                    $(this).removeClass("img-disabled");
+                    $("#fotos div input[value='" + $(this).attr("id") + "']").remove();
+                } else {
+                    $(this).addClass("img-disabled");
+                    var x = "<input type='hidden' value='" + $(this).attr("id") + "' name='removeFoto'>";
+                    $("#fotos div").append(x);
+                }
+            });
+            $(window).unload(function () {
+                var Foto = $("#Foto").val();
+                $.ajax({
+                    url: '/Carro/RemoveFotos',
+                    type: "POST",
+                    dataType: "JSON",
+                    data: { foto: Foto }
+                });
+            });
+        });
+        function upload(e) {
+            var files = e.files;
+            if (files.length > 0) {
+                if (window.FormData !== undefined) {
+                    var data = new FormData();
+                    var imgs = Array();
+                    var x = 0;
+                    var nome = $("#Foto").val();
+                    if ($('#fileFoto div img').length > 0) {
+                        nome = $('#fileFoto div:last-child img').attr('data-nome');
+                    }
+                    x = e.getAttribute("data-num");
+
+                    for (var i = 0; i < files.length; i++, x++) {
+                        data.append(nome + "_" + x, files[i]);
+                    }
+                    $.ajax({
+                        type: "POST",
+                        url: '/Carro/UploadFoto',
+                        contentType: false,
+                        processData: false,
+                        data: data,
+                        success: function (result) {
+                            $("#inputFoto input").hide();
+                            $("#img-notFound").remove();
+                            $("#inputFoto").append('<input id="' + result.num + '" class="btn-default" type="file" data-num="' + result.num + '" value="Upload" accept="image/*" name="files" onchange="upload(this)" />');
+                            $("#fileFoto").append(result.imgs);
+                            $("#Foto").val(result.nome);
+                        }
+                    });
+                    //$.ajax({
+                    //    type: "POST",
+                    //    url: '/Carro/UploadFoto',
+                    //    contentType: false,
+                    //    processData: false,
+                    //    data: data,
+                    //    success: function (result) {
+                    //        $("#foto").append(result.imgs);
+                    //    }
+                    //});
+
+                } else {
+                    alert("This browser doesn't support HTML5 file uploads!");
+                }
+            }
+        }
+    </script>
+}

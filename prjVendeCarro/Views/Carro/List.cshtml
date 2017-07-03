@@ -1,0 +1,335 @@
+﻿@model IEnumerable<prjVendeCarro.Models.CarroModels>
+
+@{
+    ViewBag.Title = "Index";
+    string nome = "";
+    string foto = "";
+    var controller = new prjVendeCarro.Controllers.CarroController();
+}
+
+
+@*<div class="body" style="height:80px; padding-left:30px;">
+
+        <div style="float:left;margin-right:10px;">
+            Estado
+            @Html.DropDownList("idEstado", (SelectList)ViewBag.Estados, htmlAttributes: new { @class = "form-control" })
+
+        </div>
+        <div id="cidade" style="float:left;margin-right:10px;">
+            Cidade
+            @Html.DropDownList("idCidade", (SelectList)ViewBag.Cidades, htmlAttributes: new { @class = "form-control" })
+        </div>
+        <div style="float:left; margin-right:10px;">
+            Busca generica
+            <input type="text" id="buscatxt" class="form-control" style="width:600px;" placeholder="Modelo / Marca / Caracteristicas" />
+        </div>
+
+        <div class="form-group" style="float:left; margin-top:20px;">
+            <input type="submit" value="Buscar" class="btn btn-default" />
+        </div>
+
+
+    </div>*@
+
+<div id="listagem-carros" class="body" style="height:1800px;">
+
+    <table id="tabela" class="display" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Ano</th>
+                <th>Combustivel</th>
+                <th>Cidade</th>
+                <th>Preço</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                nome = @Html.DisplayFor(modelItem => item.Nome).ToString();
+                foto = "/Images/Fotos/" + @controller.GetFistFotos(item.Id);
+
+                <tr>
+                    <td class="img-carro " style="width: 40%;">
+                        <img src="@foto" width="160" height="145" border="0">
+                        <strong> @Html.ActionLink("" + nome, "Details", new { id = item.Id })</strong>
+                    </td>
+                    <td id="ano-carro" class="contorno " style="width: 15%;">
+                        @Html.DisplayFor(modelItem => item.Ano)
+                    </td>
+                    <td id="combustivel-carro" class="contorno " style="width: 15%;">
+                        @Html.DisplayFor(modelItem => item.Combustivel.Nome)
+                    </td>
+                    <td id="cidade-carro" class="contorno " style="width: 15%;">
+                        @item.Cidade / @item.Cidade.Estado
+                    </td>
+                    <td id="preco-carro" class="contorno preço " style="width: 15%;">
+                        R$ @Html.DisplayFor(modelItem => item.Preco)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+
+    @*@foreach (var item in Model)
+        {
+            nome = @Html.DisplayFor(modelItem => item.Nome).ToString();
+            foto = "/Images/Fotos/" + @controller.GetFistFotos(item.Id);
+
+
+            <div class="item-conteiner">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td class="img-carro " style="width: 40%;">
+                                <img src="@foto" width="130px" height="110px"  border="0">
+                                <strong> @Html.ActionLink("" + nome, "Details", new { id = item.Id })</strong>
+                            </td>
+
+                            <td id="ano-carro" class="contorno " style="width: 15%;">
+                                @Html.DisplayFor(modelItem => item.Ano)
+                            </td>
+                            <td id="combustivel-carro" class="contorno " style="width: 15%;">
+                                @Html.DisplayFor(modelItem => item.Combustivel.Nome)
+                            </td>
+                            <td id="cidade-carro" class="contorno " style="width: 15%;">
+                                 @item.Cidade / @item.Cidade.Estado
+                            </td>
+                            <td id="preco-carro" class="contorno preço " style="width: 15%;">
+                                @Html.DisplayFor(modelItem => item.Preco)
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        }*@
+
+
+
+
+
+    @*<center>
+            <section id="paginacao">
+                <ul class="pagination">
+                    <li><a href="#">&laquo;</a></li>
+                    <li class="active"><a href="#">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">4</a></li>
+                    <li><a href="#">5</a></li>
+                    <li><a href="#">&raquo;</a></li>
+                </ul>
+            </section>
+        </center>*@
+
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+
+            $("tbody > tr").mouseover(function () {
+                $(this).addClass("linha");
+            })
+            $("tbody > tr").mouseout(function () {
+                $(this).removeClass("linha");
+            })
+
+
+            $('#tabela').DataTable();
+
+            $("#idEstado").change(function () {
+                var idEstado = $(this).val();
+                $.ajax({
+                    url: '/Carro/GetCidades',
+                    type: "POST",
+                    dataType: "JSON",
+                    data: { idEstado: idEstado },
+                    success: function (cidades) {
+                        $("#idCidade").html(""); // clear before appending new list
+                        var str = "";
+                        $.each(cidades, function (i, cidade) {
+                            $("#idCidade").append(
+                                $("<option></option>").val(cidade.Value).html(cidade.Text)
+                                );
+                        });
+                    }
+                });
+            });
+
+
+        });
+
+    </script>
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*
+           <table class="table">
+               <tr>
+                   <th>
+                       @Html.DisplayNameFor(model => model.Nome)
+                   </th>
+                   <th>
+                       @Html.DisplayNameFor(model => model.Combustivel.Nome)
+                   </th>
+                   <th>
+                       @Html.DisplayNameFor(model => model.Marca.Nome)
+                   </th>
+                   <th>
+                       @Html.DisplayNameFor(model => model.Modelo.Nome)
+                   </th>
+                   <th>
+                       @Html.DisplayNameFor(model => model.Ano)
+                   </th>
+                   <th>
+                       @Html.DisplayNameFor(model => model.Cor)
+                   </th>
+                   <th>
+                       @Html.DisplayNameFor(model => model.Foto)
+                   </th>
+                   <th>
+                       @Html.DisplayNameFor(model => model.Preco)
+                   </th>
+                   <th>
+                       @Html.DisplayNameFor(model => model.Km)
+                   </th>
+                   <th>
+                       @Html.DisplayNameFor(model => model.QtdePorta)
+                   </th>
+                   <th>
+                       @Html.DisplayNameFor(model => model.Cambio)
+                   </th>
+                   <th>
+                       @Html.DisplayNameFor(model => model.Versao)
+                   </th>
+                   <th></th>
+               </tr>
+
+
+
+    <tr>
+                           <td>
+                               @Html.DisplayFor(modelItem => item.Nome)
+                           </td>
+                           <td>
+                               @Html.DisplayFor(modelItem => item.Combustivel.Nome)
+                           </td>
+                           <td>
+                               @Html.DisplayFor(modelItem => item.Marca.Nome)
+                           </td>
+                           <td>
+                               @Html.DisplayFor(modelItem => item.Modelo.Nome)
+                           </td>
+                           <td>
+                               @Html.DisplayFor(modelItem => item.Ano)
+                           </td>
+                           <td>
+                               @Html.DisplayFor(modelItem => item.Cor)
+                           </td>
+                           <td>
+                               @Html.DisplayFor(modelItem => item.Foto)
+                           </td>
+                           <td>
+                               @Html.DisplayFor(modelItem => item.Preco)
+                           </td>
+                           <td>
+                               @Html.DisplayFor(modelItem => item.Km)
+                           </td>
+                           <td>
+                               @Html.DisplayFor(modelItem => item.QtdePorta)
+                           </td>
+                           <td>
+                               @Html.DisplayFor(modelItem => item.Cambio)
+                           </td>
+                           <td>
+                               @Html.DisplayFor(modelItem => item.Versao)
+                           </td>
+                           <td>
+                               @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+                               @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+                               @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+                           </td>
+                       </tr>
+
+
+                  <tr>
+                       <td>
+                           @Html.DisplayFor(modelItem => item.Nome)
+                       </td>
+                       <td>
+                           @Html.DisplayFor(modelItem => item.Combustivel.Nome)
+                       </td>
+                       <td>
+                           @Html.DisplayFor(modelItem => item.Marca.Nome)
+                       </td>
+                       <td>
+                           @Html.DisplayFor(modelItem => item.Modelo.Nome)
+                       </td>
+                       <td>
+                           @Html.DisplayFor(modelItem => item.Ano)
+                       </td>
+                       <td>
+                           @Html.DisplayFor(modelItem => item.Cor)
+                       </td>
+                       <td>
+                           @Html.DisplayFor(modelItem => item.Foto)
+                       </td>
+                       <td>
+                           @Html.DisplayFor(modelItem => item.Preco)
+                       </td>
+                       <td>
+                           @Html.DisplayFor(modelItem => item.Km)
+                       </td>
+                       <td>
+                           @Html.DisplayFor(modelItem => item.QtdePorta)
+                       </td>
+                       <td>
+                           @Html.DisplayFor(modelItem => item.Cambio)
+                       </td>
+                       <td>
+                           @Html.DisplayFor(modelItem => item.Versao)
+                       </td>
+                       <td>
+                           @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+                           @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+                           @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+                       </td>
+                       </tr>
+
+
+
+
+           </table>
+*@
